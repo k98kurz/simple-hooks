@@ -55,14 +55,23 @@ def enable_hooks_on_callable(fn: Callable) -> Callable:
 def enable_hooks_on_method(fn: Callable) -> Callable:
     """Enables hooks for a method."""
     def wrapped_fn(*args, **kwargs):
+        # Capture the 'self' reference from the bound method
+        self = getattr(fn, '__self__', None)
         if hasattr(wrapped_fn, 'before_hooks'):
             for hook in wrapped_fn.before_hooks:
-                hook(*args, **kwargs)
+                if self is None:
+                    hook(*args, **kwargs)
+                else:
+                    hook(self, *args, **kwargs)
         result = fn(*args, **kwargs)
         if hasattr(wrapped_fn, 'after_hooks'):
             for hook in wrapped_fn.after_hooks:
-                hook(*args, **kwargs)
+                if self is None:
+                    hook(*args, **kwargs)
+                else:
+                    hook(self, *args, **kwargs)
         return result
+
     def add_before_hook(hook: Callable) -> None:
         if not hasattr(wrapped_fn, 'before_hooks'):
             setattr(wrapped_fn, 'before_hooks', [])

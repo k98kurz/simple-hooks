@@ -76,9 +76,7 @@ t.do_something('test')
 # after instance: args=(Thing instance, 'test') kwargs={}
 ```
 
-The `enable_hooks` decorator can also be used with a class itself. However, note
-that the hooks for the methods will not be passed the self reference for hooks
-added to instances.
+The `enable_hooks` decorator can also be used with a class itself.
 
 ```python
 from simple_hooks import enable_hooks
@@ -106,11 +104,11 @@ t.do_something.add_after_hook(make_log('after instance'))
 
 t.do_something('test')
 # prints the following:
-# before instance: args=('test') kwargs={}
+# before instance: args=(Thing instance, 'test') kwargs={}
 # before original: args=(Thing instance, 'test') kwargs={}
 # test
 # after original: args=(Thing instance, 'test') kwargs={}
-# after instance: args=('test') kwargs={}
+# after instance: args=(Thing instance, 'test') kwargs={}
 ```
 
 
