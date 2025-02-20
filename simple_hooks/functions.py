@@ -44,10 +44,10 @@ def enable_hooks_on_callable(fn: Callable) -> Callable:
             if hook in wrapped_fn.after_hooks:
                 wrapped_fn.after_hooks.remove(hook)
 
-    wrapped_fn.add_before_hook = add_before_hook
-    wrapped_fn.remove_before_hook = remove_before_hook
-    wrapped_fn.add_after_hook = add_after_hook
-    wrapped_fn.remove_after_hook = remove_after_hook
+    setattr(wrapped_fn, 'add_before_hook', add_before_hook)
+    setattr(wrapped_fn, 'remove_before_hook', remove_before_hook)
+    setattr(wrapped_fn, 'add_after_hook', add_after_hook)
+    setattr(wrapped_fn, 'remove_after_hook', remove_after_hook)
 
     return functools.wraps(fn)(wrapped_fn)
 
@@ -83,15 +83,18 @@ def enable_hooks_on_method(fn: Callable) -> Callable:
             if hook in wrapped_fn.after_hooks:
                 wrapped_fn.after_hooks.remove(hook)
 
-    wrapped_fn.add_before_hook = add_before_hook
-    wrapped_fn.remove_before_hook = remove_before_hook
-    wrapped_fn.add_after_hook = add_after_hook
-    wrapped_fn.remove_after_hook = remove_after_hook
+    setattr(wrapped_fn, 'add_before_hook', add_before_hook)
+    setattr(wrapped_fn, 'remove_before_hook', remove_before_hook)
+    setattr(wrapped_fn, 'add_after_hook', add_after_hook)
+    setattr(wrapped_fn, 'remove_after_hook', remove_after_hook)
 
     wrapped_fn.__name__ = fn.__name__
+    wrapped_fn.__qualname__ = fn.__qualname__
     wrapped_fn.__annotations__ = fn.__annotations__
     wrapped_fn.__defaults__ = fn.__defaults__
     wrapped_fn.__kwdefaults__ = fn.__kwdefaults__
+    wrapped_fn.__doc__ = fn.__doc__
+    wrapped_fn.__module__ = fn.__module__
 
     return wrapped_fn
 

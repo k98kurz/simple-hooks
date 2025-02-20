@@ -3,7 +3,7 @@
 The purpose of this package is to provide a simple way to add hooks to functions
 and methods that trigger before or after the function/method call.
 
-Only downside is that it breaks static type analysis and related tools.
+Only downside is that it breaks original type analysis and related tools.
 
 ## Installation
 
@@ -55,24 +55,24 @@ class Thing:
     def __repr__(self) -> str:
         return "Thing instance"
 
-Thing.do_something.add_before_hook(make_log('before static'))
-Thing.do_something.add_after_hook(make_log('after static'))
+Thing.do_something.add_before_hook(make_log('before original'))
+Thing.do_something.add_after_hook(make_log('after original'))
 t = Thing()
 
 t.do_something('test')
-# before static: args=(Thing instance, 'test') kwargs={}
+# before original: args=(Thing instance, 'test') kwargs={}
 # test
-# after static: args=(Thing instance, 'test') kwargs={}
+# after original: args=(Thing instance, 'test') kwargs={}
 
 t.do_something.add_before_hook(make_log('before instance'))
 t.do_something.add_after_hook(make_log('after instance'))
 
 t.do_something('test')
 # prints the following:
-# before static: args=(Thing instance, 'test') kwargs={}
+# before original: args=(Thing instance, 'test') kwargs={}
 # before instance: args=(Thing instance, 'test') kwargs={}
 # test
-# after static: args=(Thing instance, 'test') kwargs={}
+# after original: args=(Thing instance, 'test') kwargs={}
 # after instance: args=(Thing instance, 'test') kwargs={}
 ```
 
@@ -92,14 +92,14 @@ class Thing:
     def __repr__(self) -> str:
         return "Thing instance"
 
-Thing.do_something.add_before_hook(make_log('before static'))
-Thing.do_something.add_after_hook(make_log('after static'))
+Thing.do_something.add_before_hook(make_log('before original'))
+Thing.do_something.add_after_hook(make_log('after original'))
 t = Thing()
 
 t.do_something('test')
-# before static: args=(Thing instance, 'test') kwargs={}
+# before original: args=(Thing instance, 'test') kwargs={}
 # test
-# after static: args=(Thing instance, 'test') kwargs={}
+# after original: args=(Thing instance, 'test') kwargs={}
 
 t.do_something.add_before_hook(make_log('before instance'))
 t.do_something.add_after_hook(make_log('after instance'))
@@ -107,9 +107,9 @@ t.do_something.add_after_hook(make_log('after instance'))
 t.do_something('test')
 # prints the following:
 # before instance: args=('test') kwargs={}
-# before static: args=(Thing instance, 'test') kwargs={}
+# before original: args=(Thing instance, 'test') kwargs={}
 # test
-# after static: args=(Thing instance, 'test') kwargs={}
+# after original: args=(Thing instance, 'test') kwargs={}
 # after instance: args=('test') kwargs={}
 ```
 
