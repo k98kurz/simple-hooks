@@ -12,7 +12,7 @@ description = "A hopefully simple-to-use system for enabling hooks for before an
 readme = "readme.md"
 requires-python = ">=3.10"
 classifiers = [
-  "Development Status :: 2 - Beta",
+  "Development Status :: 4 - Beta",
   "Programming Language :: Python :: 3",
   "License :: OSI Approved :: ISC License (ISCL)",
   "Operating System :: OS Independent",
